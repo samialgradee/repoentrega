@@ -1,0 +1,8 @@
+site_name: "entrega"
+site_description: "api de entrega"
+
+nav:
+  - Introduction: index.md
+
+plugins:
+  - techdocs-core

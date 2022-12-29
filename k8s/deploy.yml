@@ -1,0 +1,65 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: entrega-ingress
+  labels:
+    app: entrega
+    backstage.io/kubernetes-id: entrega 
+spec:
+  rules:
+    - host: api-entrega-isabel2.empcbr.thoughtworks-labs.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: entrega
+                port: 
+                  number: 80
+  tls:
+  - hosts:
+    - api-entrega-isabel2.empcbr.thoughtworks-labs.net
+    secretName: letencryptkey
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: entrega
+  labels:
+    app: entrega
+    backstage.io/kubernetes-id: entrega
+spec:
+  ports:
+  - port: 80
+    targetPort: 5000
+  selector:
+    app: entrega
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: entrega
+  labels:
+    app: entrega
+    backstage.io/kubernetes-id: entrega
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 5
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: entrega
+  template:
+    metadata:
+      labels:
+        app: entrega
+    spec:
+      containers:
+      - name: entrega
+        image: 626109959667.dkr.ecr.us-east-1.amazonaws.com/entrega:{image-tag}
+        ports:
+        - containerPort: 5000

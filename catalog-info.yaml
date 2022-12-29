@@ -1,0 +1,22 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: "entrega"
+  description: "api de entrega"
+  links:
+    - url: https://api-entrega-isabel2.empcbr.thoughtworks-labs.net/swagger
+      title: entrega
+      icon: dashboard
+  annotations:
+    circleci.com/project-slug: github/platform-dx/repoentrega
+    backstage.io/techdocs-ref: dir:.
+    github.com/project-slug:  platform-dx/repoentrega
+    sonarqube.org/project-key: "entrega"
+    backstage.io/kubernetes-label-selector: "app=entrega"
+    backstage.io/adr-location: docs/adrs/
+spec:
+  type: service
+  lifecycle: experimental
+  owner: "platform-dx"
+  providesApis:
+    - "entrega"
